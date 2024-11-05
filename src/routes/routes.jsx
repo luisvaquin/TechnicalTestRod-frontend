@@ -8,7 +8,7 @@ import AccountUser from "../pages/account";
 const routes = createBrowserRouter([
     {
         path: "/",
-        element: <HomePage />,
+        element: <Login />,
     },
     {
         path: "/account",
@@ -17,10 +17,6 @@ const routes = createBrowserRouter([
     {
         path: "/resetPassword",
         element: <ResetPassword />,
-    },
-    {
-        path: "/login",
-        element: <Login />,
     },
 ]);
 
