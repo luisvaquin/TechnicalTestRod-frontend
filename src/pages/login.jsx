@@ -1,25 +1,23 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PopOpCredentials from "../components/popCredentials"; // Asegúrate de que esté correctamente exportado
 
 const Login = () => {
-    // Estados para los campos del formulario y el mensaje de error
     const [userLog, setUserLog] = useState("");
     const [passLog, setPassLog] = useState("");
     const [codLog, setCodLog] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [welcomeMessage, setWelcomeMessage] = useState("");
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrorMessage(""); // Reinicia el mensaje de error
-        setWelcomeMessage(""); // Reinicia el mensaje de bienvenida
+        setErrorMessage("");
+        setWelcomeMessage("");
 
-        // Inicializa un array para almacenar los campos vacíos
         const missingFields = [];
-
-        // Validación de campos vacíos
         if (!userLog) missingFields.push("Usuario");
         if (!passLog) missingFields.push("Contraseña");
         if (!codLog) missingFields.push("Código");
@@ -35,7 +33,6 @@ const Login = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                mode: "cors",
                 body: JSON.stringify({ userLog, passLog, codLog }),
             });
 
@@ -43,8 +40,7 @@ const Login = () => {
 
             if (response.ok) {
                 setWelcomeMessage(`Bienvenido, ${data.Bienvenido}`);
-                console.log("Logeado correctamente");
-                navigate("/account"); // Redirige a la ruta /account
+                navigate("/account");
             } else {
                 setErrorMessage(data.message);
                 window.alert("UPS CREDENCIALES INCORRECTAS");
@@ -53,6 +49,14 @@ const Login = () => {
             setErrorMessage("Ups, CREDENCIALES INCORRECTA!");
             console.error("Error en la conexión:", error);
         }
+    };
+
+    const handleOpenPopup = () => {
+        setIsPopupOpen(true);
+    };
+
+    const handleClosePopup = () => {
+        setIsPopupOpen(false);
     };
 
     return (
@@ -126,7 +130,6 @@ const Login = () => {
                         Iniciar sesión
                     </button>
 
-                    {/* Mensaje de error o bienvenida */}
                     {errorMessage && <p className="text-red-700 text-center mt-4">{errorMessage}</p>}
                     {welcomeMessage && <p className="text-green-500 text-center mt-4">{welcomeMessage}</p>}
 
@@ -134,9 +137,16 @@ const Login = () => {
                         <a href="/resetPassword" className="text-sm text-blue-500 hover:underline">
                             Olvidé mi contraseña
                         </a>
+                        <br />
+                        <a href="#" onClick={handleOpenPopup} className="text-sm text-black hover:underline">
+                            Ver credenciales para loguearse en demo
+                        </a>
                     </div>
                 </form>
             </div>
+
+            {/* Aquí se renderiza el pop-up */}
+            <PopOpCredentials isOpen={isPopupOpen} onClose={handleClosePopup} />
         </div>
     );
 };

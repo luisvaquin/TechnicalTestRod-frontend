@@ -10,8 +10,12 @@ import handleNavbarScroll from "./srollHandler.js";
 
 const drawerWidth = 240;
 const navItems = [
-    { label: 'Home', path: '/', },
-    { label: 'Proyectos', path: '/proyects', }
+    { label: 'Informacion de cuentas', path: '/InfoAccount', },
+    { label: 'Transferencia', path: '/', },
+    { label: 'Pagos y aportes', path: '/', },
+    { label: 'Agencia en linea', path: '/', },
+    { label: 'Historial', path: '/', },
+    { label: 'Otros sitios', path: '/', }
 ];
 
 function NavbarNavigate(props) {
@@ -44,8 +48,7 @@ function NavbarNavigate(props) {
                 ))}
             </List>
             <div className="mx-[1rem] max-[1000px]:mt-[-1.2rem]" id="">
-                <img className="w-[auto] h-[auto] rounded-md mx-[auto] my-[auto]
-                        animate-jiggle" src="./iconDevSvg.svg" alt="Graphic Design" id="routeProyects" />
+                <img className="w-[auto] h-[auto] rounded-md mx-[auto] my-[auto] animate-jiggle" src="./iconDevSvg.svg" alt="Graphic Design" id="routeProyects" />
             </div>
         </Box>
     );
@@ -65,9 +68,7 @@ function NavbarNavigate(props) {
                     boxShadow: 'none',
                 }}
             >
-
                 <Toolbar className="p-[1rem]">
-
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
@@ -82,17 +83,19 @@ function NavbarNavigate(props) {
                         variant="h6"
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-                    >
+                    ></Typography>
 
-                    </Typography>
-                    <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                    <Box sx={{ display: { xs: 'none', sm: 'block' }, justifyContent: 'center', flexGrow: 1, mx: 2 }}>
                         {navItems.map((item) => (
                             <Button
                                 key={item.label}
                                 component={Link}
                                 to={item.path}
                                 className={item.style}
-                                sx={{ color: navBackground === 'transparent' ? '#fff' : '#000' }}
+                                sx={{
+                                    color: navBackground === 'transparent' ? '#fff' : '#000',
+                                    mx: 2 // Espaciado horizontal entre botones
+                                }}
                             >
                                 {item.label}
                             </Button>
